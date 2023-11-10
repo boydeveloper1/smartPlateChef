@@ -1,7 +1,6 @@
 export const styles = {
   container: {
     position: "relative",
-
     color: "#ffffff",
     textAlign: "center",
     minHeight: "80vh",
@@ -68,6 +67,17 @@ export const styles = {
     },
     "@media (min-width: 2646px) and (max-width: 5000px)": {
       fontSize: "100px",
+    },
+  },
+  subHeadingStyles: {
+    fontStyle: "italic",
+    color: "#ce8964",
+    fontSize: "24px",
+    zIndex: 2,
+    marginBottom: "0.5rem",
+    "@media (max-width: 900px)": {
+      fontSize: "15px",
+      marginBottom: "0.5rem",
     },
   },
 
