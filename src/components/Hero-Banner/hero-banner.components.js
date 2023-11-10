@@ -1,30 +1,40 @@
+// Import React and other necessary modules
 import React from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import { styles } from "./hero-banner.styles";
+import DoubleHeader from "../double-header/double-header.components";
 
-const HeroBanner = ({ text, src }) => {
+const BackgroundBox = () => (
+  <Box
+    sx={{
+      ...styles.backgroundBox,
+      backgroundImage:
+        'url("https://images.unsplash.com/photo-1625604086816-4bfaf603e842?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
+    }}
+  />
+);
+
+const HeroBanner = () => {
   return (
-    <div style={styles.container}>
-      <Box
-        sx={{
-          ...styles.box,
-          backgroundImage: `url(${
-            src ||
-            "https://t4.ftcdn.net/jpg/03/81/25/29/240_F_381252938_XfKEvBc6Z3flOUPN7Q80eHStdmcFSUBq.jpg"
-          })`,
-        }}
-      ></Box>
-      <Typography
-        sx={{ ...styles.typography, color: "#ffffff" }}
-        variant="h3"
-        component="h1"
-        gutterBottom
-        align="center"
-      >
-        {text}
-      </Typography>
-    </div>
+    <Box sx={styles.container} className="hero-container">
+      <BackgroundBox />
+      <Box sx={styles.contentBox} className="hero-content">
+        <DoubleHeader
+          heading={`Let's Eat Good!`}
+          headingStyles={styles.headingStyles}
+        />
+        <Button
+          sx={styles.button}
+          variant="contained"
+          size="large"
+          color="secondary"
+          href={"#begin-now"}
+        >
+          Begin Now
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
