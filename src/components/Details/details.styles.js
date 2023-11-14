@@ -29,7 +29,7 @@ export const styles = {
   typography2: {
     paddingTop: "35px",
     textAlign: "center",
-    color: "#ce8964",
+    color: "white",
     fontSize: "63px",
     fontWeight: "bold",
     lineHeight: "3.9rem",
