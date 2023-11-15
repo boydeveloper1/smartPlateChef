@@ -8,7 +8,7 @@ const Input = ({
   placeholder,
   type,
   element,
-  errorText,
+  rows,
   options,
   onChange,
   onBlur,
@@ -26,7 +26,7 @@ const Input = ({
         placeholder={placeholder}
         value={value}
       />
-    ) : (
+    ) : element === "select" ? (
       <select onChange={onChange} onBlur={onBlur} id={id} value={value}>
         <option value="">--Please choose an option--</option>
         {options.map((option) => (
@@ -35,12 +35,43 @@ const Input = ({
           </option>
         ))}
       </select>
+    ) : element === "range" ? (
+      <div>
+        <input
+          onChange={onChange}
+          onBlur={onBlur}
+          type="range"
+          id={id}
+          min="0"
+          max="3"
+          step="1"
+          list={id}
+        />
+        <datalist id={id}>
+          {options.map((option) => (
+            <option
+              key={option.name}
+              value={option.name}
+              label={option.name}
+            ></option>
+          ))}
+        </datalist>
+      </div>
+    ) : (
+      <textarea
+        onChange={onChange}
+        onBlur={onBlur}
+        id={id}
+        rows={rows || 7}
+        value={value}
+        placeholder={placeholder}
+        style={{ whiteSpace: "pre-line" }}
+      />
     );
   return (
     <div className="form-control">
       <label htmlFor={id}>{label}</label>
       {main}
-      {/* {!inputState.isValid && inputState.isTouched && <p>{errorText}</p>} */}
     </div>
   );
 };

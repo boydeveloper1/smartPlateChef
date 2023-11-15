@@ -1,42 +1,120 @@
+/* General Form Control Styles */
 .form-control {
   margin: 1rem 0;
-}
-
-.form-control label,
-.form-control input,
-.form-control textarea {
-  display: block;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .form-control label {
-  font-weight: bold;
+  color: white;
+  font-weight: 600;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  display: block;
 }
 
-.form-control select,
 .form-control input,
-.form-control textarea {
+.form-control select,
+.form-control textarea,
+.form-control input[type="range"] {
   width: 100%;
+  max-width: 100%;
   font: inherit;
-  border: 1px solid #ccc;
-  background: #f8f8f8;
-  padding: 0.15rem 0.25rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  box-sizing: border-box;
 }
 
 .form-control input:focus,
-.form-control textarea:focus {
+.form-control select:focus,
+.form-control textarea:focus,
+.form-control input[type="range"]:focus {
   outline: none;
-  background: #ebebeb;
-  border-color: #510077;
+  border-color: #ce8964;
+  box-shadow: 0 0 10px #ce8964;
 }
 
-.form-control--invalid label,
-.form-control--invalid p {
-  color: red;
+.form-control textarea {
+  resize: vertical;
+}
+
+/* Select Styling */
+.form-control select {
+  appearance: none;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Invalid State Styles */
+.form-control--invalid label {
+  color: #e74c3c;
 }
 
 .form-control--invalid input,
-.form-control--invalid textarea {
-  border-color: red;
-  background: #ffd1d1;
+.form-control--invalid select,
+.form-control--invalid textarea,
+.form-control--invalid input[type="range"] {
+  border-color: #e74c3c;
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+/* Datalist Styling */
+datalist {
+  margin-top: 15px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  writing-mode: vertical-lr;
+  width: 100%;
+}
+
+/* Range Input Styling */
+.form-control input[type="range"] {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  margin-top: 2%;
+}
+
+.form-control input[type="range"]::-webkit-slider-runnable-track,
+.form-control input[type="range"]::-moz-range-track,
+.form-control input[type="range"]::-ms-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #ddd;
+  border-radius: 4px;
+}
+
+.form-control input[type="range"]::-webkit-slider-thumb,
+.form-control input[type="range"]::-moz-range-thumb,
+.form-control input[type="range"]::-ms-thumb {
+  height: 20px;
+  width: 20px;
+  background: #ce8964;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -6px;
+}
+
+.form-control input[type="range"]:focus::-ms-fill-lower,
+.form-control input[type="range"]:focus::-ms-fill-upper {
+  background: #ce8964;
 }

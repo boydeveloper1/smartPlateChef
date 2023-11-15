@@ -1,7 +1,6 @@
 export const styles = {
-  subHeading: { fontStyle: "italic", color: "#FECB00", fontSize: "24px" },
+  subHeading: { fontStyle: "italic", color: "#ce8964", fontSize: "24px" },
   heading: {
-    fontFamily: "MONOSPACE",
     fontSize: "48px",
     fontWeight: "bold",
     marginBottom: "3rem",
