@@ -15,7 +15,6 @@ const Details = () => {
           Get Started.
         </Typography>
         <Grid container spacing={5}>
-          {/* Box 1 */}
           <Grid item xs={12} sm={3}>
             <Paper elevation={3} sx={styles.paper2}>
               <img
@@ -31,7 +30,6 @@ const Details = () => {
               </Typography>
             </Paper>
           </Grid>
-          {/* Box 2 */}
           <Grid item xs={12} sm={3}>
             <Paper elevation={3} sx={styles.paper2}>
               <img
@@ -47,7 +45,6 @@ const Details = () => {
               </Typography>
             </Paper>
           </Grid>
-          {/* Box 3 */}
           <Grid item xs={12} sm={3}>
             <Paper elevation={3} sx={styles.paper2}>
               <img
@@ -64,7 +61,6 @@ const Details = () => {
               </Typography>
             </Paper>
           </Grid>
-          {/* Box 4 */}
           <Grid item xs={12} sm={3}>
             <Paper elevation={3} sx={styles.paper2}>
               <img

@@ -1,8 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Button } from "@mui/material";
 import Input from "../Input/input.components";
 import DoubleHeader from "../double-header/double-header.components";
+import OutdoorGrillIcon from "@mui/icons-material/OutdoorGrill";
 
 import { styles } from "./form.styles";
 
@@ -32,9 +33,9 @@ const Form = () => {
       dietaryPreferences: "",
     },
   });
-  console.log(values);
+
   return (
-    <Box sx={{ height: "auto", backgroundColor: "#370031" }}>
+    <Box sx={{ position: "relative" }}>
       <BackgroundBox />
       <DoubleHeader
         subheading={"A Personalized Recipe Experience"}
@@ -116,16 +117,41 @@ const Form = () => {
               value={values.dietaryPreferences}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} xl={5}>
             <Input
               element="range"
               id="spicelevel"
-              label="Spice level preference:"
+              label="Spice level:"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.spicelevel}
               options={spicelevel}
             />
+          </Grid>
+          <Grid item xs={8}>
+            <Button
+              fullWidth
+              variant="contained"
+              endIcon={<OutdoorGrillIcon />}
+              size="large"
+              sx={{
+                mb: "9%",
+                mt: "3%",
+                backgroundColor: "#eaf27c",
+                color: "black",
+                border: "thick double #eaf27c",
+                "&:hover": {
+                  backgroundColor: "#eaf27c",
+                },
+                "@media (max-width:900px)": {
+                  fontSize: "15px",
+                  mt: "12%",
+                  mb: "19%",
+                },
+              }}
+            >
+              Let's Cook
+            </Button>
           </Grid>
         </Grid>
       </form>

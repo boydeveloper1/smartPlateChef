@@ -5,16 +5,20 @@ import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header/header.components";
 import Home from "./pages/Home/home.components";
+import Footer from "./components/Footer/footer.components";
 
 const App = () => {
   // let routes;
 
   return (
-    <Routes>
-      <Route path="/" element={<Header />}>
-        <Route index element={<Home />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Header />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
+      <Footer />
+    </>
   );
 };
 
