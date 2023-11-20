@@ -116,3 +116,14 @@ datalist {
 .form-control input[type="range"]:focus::-ms-fill-upper {
   background: #ce8964;
 }
+
+.form-control--invalid label,
+.inputs-error p {
+  color: white;
+}
+.inputs-error select,
+.inputs-error input,
+.inputs-error textarea {
+  border-color: red;
+  background: #ffd1d1;
+}

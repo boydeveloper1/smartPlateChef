@@ -5,7 +5,14 @@ import Input from "../Input/input.components";
 import DoubleHeader from "../double-header/double-header.components";
 import OutdoorGrillIcon from "@mui/icons-material/OutdoorGrill";
 
+import { formSchema } from "../../utilities/validation/validation";
 import { styles } from "./form.styles";
+
+// subit handler that formik calls
+
+const onSubmit = async () => {
+  console.log("submitted");
+};
 
 const BackgroundBox = () => <Box sx={styles.box2} />;
 
@@ -21,9 +28,17 @@ const Form = () => {
     { value: "3", name: "high" },
   ];
 
-  const { values, handleBlur, handleChange } = useFormik({
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    // isSubmitting,
+  } = useFormik({
     initialValues: {
-      spicelevel: spicelevel[0].value,
+      spicelevel: spicelevel[3].value,
       occasion: "",
       cusineType: "",
       servings: "",
@@ -32,8 +47,11 @@ const Form = () => {
       occassion: "",
       dietaryPreferences: "",
     },
+    validationSchema: formSchema,
+    onSubmit,
   });
 
+  console.log(errors);
   return (
     <Box sx={{ position: "relative" }}>
       <BackgroundBox />
@@ -57,7 +75,7 @@ const Form = () => {
         }}
       />
 
-      <form autoComplete="off">
+      <form onSubmit={handleSubmit} autoComplete="off">
         <Grid
           container
           columnSpacing={6}
@@ -71,6 +89,10 @@ const Form = () => {
               value={values.ingredients}
               onChange={handleChange}
               onBlur={handleBlur}
+              errorText={errors.ingredients}
+              className={
+                errors.ingredients && touched.ingredients ? "inputs-error" : ""
+              }
             />
           </Grid>
           <Grid item xs={12} md={12} l={6} xl={6}>
@@ -82,6 +104,10 @@ const Form = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.cusineType}
+              errorText={errors.cusineType}
+              className={
+                errors.cusineType && touched.cusineType ? "inputs-error" : ""
+              }
             />
           </Grid>
           <Grid item xs={12} md={12} l={6} xl={6}>
@@ -93,6 +119,10 @@ const Form = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.servings}
+              errorText={errors.servings}
+              className={
+                errors.servings && touched.servings ? "inputs-error" : ""
+              }
             />
           </Grid>
           <Grid item xs={12} l={8} xl={8}>
@@ -104,6 +134,10 @@ const Form = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.occasion}
+              errorText={errors.occasion}
+              className={
+                errors.occasion && touched.occasion ? "inputs-error" : ""
+              }
             />
           </Grid>
           <Grid item xs={6} l={4} xl={4}>
@@ -115,6 +149,12 @@ const Form = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.dietaryPreferences}
+              errorText={errors.dietaryPreferences}
+              className={
+                errors.dietaryPreferences && touched.dietaryPreferences
+                  ? "inputs-error"
+                  : ""
+              }
             />
           </Grid>
           <Grid item xs={6} xl={5}>
@@ -130,6 +170,7 @@ const Form = () => {
           </Grid>
           <Grid item xs={8}>
             <Button
+              disabled={Object.keys(errors).length > 0}
               fullWidth
               variant="contained"
               endIcon={<OutdoorGrillIcon />}
@@ -141,7 +182,14 @@ const Form = () => {
                 color: "black",
                 border: "thick double #eaf27c",
                 "&:hover": {
-                  backgroundColor: "#eaf27c",
+                  backgroundColor: "#ad6e4b",
+                  border: "thick double #AD6E4B",
+                  color: "white",
+                },
+                "&:disabled": {
+                  backgroundColor: "#CCCCCC",
+                  color: "#666666",
+                  border: "thick double #CCCCCC",
                 },
                 "@media (max-width:900px)": {
                   fontSize: "15px",

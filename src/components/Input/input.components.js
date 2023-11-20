@@ -6,6 +6,8 @@ import "./input.styles.css";
 const Input = ({
   label,
   placeholder,
+  errorText,
+  className,
   type,
   element,
   rows,
@@ -19,6 +21,7 @@ const Input = ({
   const main =
     element === "input" ? (
       <input
+        className={className}
         onChange={onChange}
         onBlur={onBlur}
         id={id}
@@ -27,7 +30,13 @@ const Input = ({
         value={value}
       />
     ) : element === "select" ? (
-      <select onChange={onChange} onBlur={onBlur} id={id} value={value}>
+      <select
+        onChange={onChange}
+        onBlur={onBlur}
+        id={id}
+        value={value}
+        className={className}
+      >
         <option value="">--Please choose an option--</option>
         {options.map((option) => (
           <option key={option} value={option}>
@@ -38,6 +47,7 @@ const Input = ({
     ) : element === "range" ? (
       <div>
         <input
+          className={className}
           onChange={onChange}
           onBlur={onBlur}
           type="range"
@@ -59,6 +69,7 @@ const Input = ({
       </div>
     ) : (
       <textarea
+        className={className}
         onChange={onChange}
         onBlur={onBlur}
         id={id}
@@ -69,9 +80,10 @@ const Input = ({
       />
     );
   return (
-    <div className="form-control">
+    <div className={`form-control ${className}`}>
       <label htmlFor={id}>{label}</label>
       {main}
+      {className && <p>{errorText}</p>}
     </div>
   );
 };

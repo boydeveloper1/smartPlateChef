@@ -48,7 +48,7 @@ const Footer = () => {
         >
           <Box>
             <Typography variant="p" component="p" sx={styles.typography2}>
-              Commonly used ingredients:
+              Frequently used ingredients:
             </Typography>
           </Box>
         </Grid>
