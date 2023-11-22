@@ -8,9 +8,9 @@ import OutdoorGrillIcon from "@mui/icons-material/OutdoorGrill";
 import { formSchema } from "../../utilities/validation/validation";
 import { styles } from "./form.styles";
 
-// subit handler that formik calls
+// submit handler that formik calls
 
-const onSubmit = async () => {
+const onSubmit = async (values, actions) => {
   console.log("submitted");
 };
 
@@ -30,12 +30,13 @@ const Form = () => {
 
   const {
     values,
+    isValid,
     errors,
     touched,
     handleBlur,
     handleChange,
     handleSubmit,
-    // isSubmitting,
+    isSubmitting,
   } = useFormik({
     initialValues: {
       spicelevel: spicelevel[3].value,
@@ -49,6 +50,7 @@ const Form = () => {
     },
     validationSchema: formSchema,
     onSubmit,
+    validateOnMount: true,
   });
 
   console.log(errors);
@@ -166,11 +168,15 @@ const Form = () => {
               onBlur={handleBlur}
               value={values.spicelevel}
               options={spicelevel}
+              errorText={errors.spicelevel}
+              className={
+                errors.spicelevel && touched.spicelevel ? "inputs-error" : ""
+              }
             />
           </Grid>
           <Grid item xs={8}>
             <Button
-              disabled={Object.keys(errors).length > 0}
+              disabled={!isValid || isSubmitting}
               fullWidth
               variant="contained"
               endIcon={<OutdoorGrillIcon />}
