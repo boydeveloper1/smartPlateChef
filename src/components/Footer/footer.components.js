@@ -36,6 +36,11 @@ const Footer = () => {
             Powered By:
           </Typography>
           <img src="/images/gpt.png" alt="Logo" style={{ width: "50%" }} />
+          <Box sx={{ display: "block" }}>
+            <Typography variant="body2" sx={styles.typography3}>
+              TURBO
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
 

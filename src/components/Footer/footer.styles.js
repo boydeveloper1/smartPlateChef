@@ -1,13 +1,13 @@
 export const styles = {
   grid1: {
-    backgroundColor: "#E9F27C",
+    background: "linear-gradient(to right, black 0%, #e9f27c 100%)",
     color: "black",
     display: "flex",
     alignItems: "center",
     paddingBottom: "80px",
   },
   grid2: {
-    backgroundColor: "black",
+    background: "black",
     display: "flex",
     alignItems: "center",
     paddingBottom: "80px",
@@ -19,9 +19,14 @@ export const styles = {
     fontWeight: "bold",
     color: "white",
   },
+  typography3: {
+    pt: "10%",
+    fontSize: "20px",
+    fontWeight: "bold",
+    color: "#e9f27c",
+  },
   grid4: {
-    backgroundColor: "#ad6e4b",
-
+    background: "linear-gradient(to right, black 0%, #e9f27c 100%)",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -30,8 +35,8 @@ export const styles = {
     justifyContent: "center",
     textAlign: "center",
   },
-  typography2: { color: "white", fontSize: "25px" },
+  typography2: { color: "white", fontSize: "25px", fontWeight: "bold" },
   grid6: { justifyContent: "center" },
   box1: { listStyle: "none", padding: 0, px: "10px" },
-  box2: { marginBottom: 1, color: "white" },
+  box2: { marginBottom: 1, color: "black" },
 };

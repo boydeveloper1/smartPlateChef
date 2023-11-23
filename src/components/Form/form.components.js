@@ -4,19 +4,39 @@ import { Box, Grid, Button } from "@mui/material";
 import Input from "../Input/input.components";
 import DoubleHeader from "../double-header/double-header.components";
 import OutdoorGrillIcon from "@mui/icons-material/OutdoorGrill";
+import { useHttpClient } from "../../Hooks/http-hook";
 
 import { formSchema } from "../../utilities/validation/validation";
 import { styles } from "./form.styles";
 
-// submit handler that formik calls
-
-const onSubmit = async (values, actions) => {
-  console.log("submitted");
-};
-
 const BackgroundBox = () => <Box sx={styles.box2} />;
 
 const Form = () => {
+  const { isLoading, error, clearError, sendRequest } = useHttpClient();
+
+  // submit handler that formik calls
+  // to send http post request to BE then gpt API
+  const onSubmit = async (values, actions) => {
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + "/gpt",
+        "POST",
+        JSON.stringify({
+          ingredients: values.ingredients,
+          cusineType: values.cusineType,
+          servings: values.servings,
+          occasion: values.occasion,
+          dietaryPreferences: values.dietaryPreferences,
+          spicelevel: values.spicelevel,
+        }),
+        {
+          "Content-Type": "application/json",
+          // Authorization: "Bearer " + auth.token,
+        }
+      );
+    } catch (error) {}
+  };
+
   const cusineType = ["African", "English", "Italian", "Chinese", "Japanese"];
   const servings = [1, 2, 3, 4, 5, 6, 7, 8];
   const occasion = ["Quick Weekday Meal", "Family Dinner", "Date Night"];
@@ -44,8 +64,6 @@ const Form = () => {
       cusineType: "",
       servings: "",
       ingredients: "",
-      spiceLevel: "",
-      occassion: "",
       dietaryPreferences: "",
     },
     validationSchema: formSchema,
@@ -53,7 +71,6 @@ const Form = () => {
     validateOnMount: true,
   });
 
-  console.log(errors);
   return (
     <Box sx={{ position: "relative" }}>
       <BackgroundBox />
@@ -176,7 +193,8 @@ const Form = () => {
           </Grid>
           <Grid item xs={8}>
             <Button
-              disabled={!isValid || isSubmitting}
+              onClick={handleSubmit}
+              disabled={!isValid || isLoading}
               fullWidth
               variant="contained"
               endIcon={<OutdoorGrillIcon />}
