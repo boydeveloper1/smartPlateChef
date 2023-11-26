@@ -35,7 +35,7 @@ export const styles = {
     justifyContent: "center",
     textAlign: "center",
   },
-  typography2: { color: "white", fontSize: "25px", fontWeight: "bold" },
+  typography2: { color: "black", fontSize: "25px", fontWeight: "bold" },
   grid6: { justifyContent: "center" },
   box1: { listStyle: "none", padding: 0, px: "10px" },
   box2: { marginBottom: 1, color: "black" },
