@@ -10,6 +10,7 @@ import LoadingSpinner from "../Loading-Spinner/loading-spinner.components";
 import { formSchema } from "../../utilities/validation/validation";
 import { styles } from "./form.styles";
 import ErrorModal from "../Error-Modal/error-modal";
+import RecipeDetails from "../Recipe-Details/recipe-details";
 
 const BackgroundBox = () => <Box sx={styles.box2} />;
 
@@ -39,6 +40,7 @@ const Form = () => {
       setLoadedData(response);
     } catch (error) {}
   };
+  console.log(loadedData);
 
   const cusineType = ["African", "English", "Italian", "Chinese", "Japanese"];
   const servings = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -78,7 +80,7 @@ const Form = () => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && (
         <LoadingSpinner
-          heading={"We are creating ideas for your meal, hold tight"}
+          heading={"We are creating ideas for your meal, hold tight."}
           subHeading={"getting a sumptuous recipe. relax ..."}
           asOverlay
         />
@@ -105,7 +107,12 @@ const Form = () => {
             fontSize: "24px",
           }}
         />
-
+        {loadedData && (
+          <RecipeDetails
+            recipeData={loadedData}
+            onClose={() => setLoadedData(null)}
+          />
+        )}
         <form onSubmit={handleSubmit} autoComplete="off">
           <Grid
             container
