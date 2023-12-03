@@ -4,12 +4,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgb(55, 0, 49, 0.95);
+  background: rgb(55, 0, 49, 0.96);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 30;
+  z-index: 1000;
 }
 
 .loading-text {

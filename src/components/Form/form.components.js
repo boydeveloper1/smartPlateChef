@@ -15,12 +15,13 @@ import RecipeDetails from "../Recipe-Details/recipe-details";
 const BackgroundBox = () => <Box sx={styles.box2} />;
 
 const Form = () => {
-  const [loadedData, setLoadedData] = useState([]);
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [loadedData, setLoadedData] = useState(null);
   const { isLoading, error, clearError, sendRequest } = useHttpClient();
 
   // submit handler that formik calls
   // to send http post request to BE then gpt API
-  const onSubmit = async (values, actions) => {
+  const onSubmit = async (values) => {
     try {
       const response = await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/gpt",
@@ -40,11 +41,9 @@ const Form = () => {
       setLoadedData(response);
     } catch (error) {}
   };
-  console.log(loadedData);
-
   const cusineType = ["African", "English", "Italian", "Chinese", "Japanese"];
   const servings = [1, 2, 3, 4, 5, 6, 7, 8];
-  const occasion = ["Quick Weekday Meal", "Family Dinner", "Date Night"];
+  const occasion = ["Weekday Meal", "Family Dinner", "Date Night"];
   const dietaryPreferences = ["None", "Vegetarian", "Vegan", "Keto", "Paleo"];
   const spicelevel = [
     { value: "0", name: "none" },
@@ -111,6 +110,11 @@ const Form = () => {
           <RecipeDetails
             recipeData={loadedData}
             onClose={() => setLoadedData(null)}
+            serving={values.servings}
+            cusineType={values.cusineType}
+            ocassion={values.occasion}
+            dietary={values.dietaryPreferences}
+            handleSubmit={handleSubmit}
           />
         )}
         <form onSubmit={handleSubmit} autoComplete="off">
