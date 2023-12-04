@@ -30,7 +30,7 @@ const Header = () => {
                   variant="h6"
                   noWrap
                   component="a"
-                  href="authentication"
+                  href="/authentication"
                   sx={{
                     mr: 2,
                     display: { xs: "flex", md: "flex" },

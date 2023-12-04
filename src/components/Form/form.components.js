@@ -90,21 +90,8 @@ const Form = () => {
         <DoubleHeader
           subheading={"A Personalized Recipe Experience"}
           heading={"Crafting Your Culinary Signature"}
-          headingStyles={{
-            color: "white",
-            fontSize: "48px",
-            fontWeight: "bold",
-            marginBottom: "3rem",
-            "@media (max-width: 900px)": {
-              fontSize: "35px",
-            },
-          }}
-          subHeadingStyles={{
-            paddingTop: "50px",
-            fontStyle: "italic",
-            color: "#ce8964",
-            fontSize: "24px",
-          }}
+          headingStyles={styles.dh}
+          subHeadingStyles={styles.ss}
         />
         {loadedData && (
           <RecipeDetails
@@ -118,11 +105,7 @@ const Form = () => {
           />
         )}
         <form onSubmit={handleSubmit} autoComplete="off">
-          <Grid
-            container
-            columnSpacing={6}
-            sx={{ px: "5%", display: "flex", justifyContent: "center" }}
-          >
+          <Grid container columnSpacing={6} sx={styles.form}>
             <Grid item xs={12}>
               <Input
                 id="ingredients"
@@ -224,28 +207,7 @@ const Form = () => {
                 variant="contained"
                 endIcon={<OutdoorGrillIcon />}
                 size="large"
-                sx={{
-                  mb: "9%",
-                  mt: "3%",
-                  backgroundColor: "#eaf27c",
-                  color: "black",
-                  border: "thick double #eaf27c",
-                  "&:hover": {
-                    backgroundColor: "#ad6e4b",
-                    border: "thick double #AD6E4B",
-                    color: "white",
-                  },
-                  "&:disabled": {
-                    backgroundColor: "#CCCCCC",
-                    color: "#666666",
-                    border: "thick double #CCCCCC",
-                  },
-                  "@media (max-width:900px)": {
-                    fontSize: "15px",
-                    mt: "12%",
-                    mb: "19%",
-                  },
-                }}
+                sx={styles.button}
               >
                 Let's Cook
               </Button>
