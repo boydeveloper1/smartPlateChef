@@ -41,7 +41,6 @@ const Authentication = () => {
     setIsLoginMode(!isLoginMode);
     validateForm();
   };
-
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
@@ -51,7 +50,7 @@ const Authentication = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "100vh",
+          height: "85vh",
           width: "100%",
         }}
       >
@@ -124,7 +123,11 @@ const Authentication = () => {
 
             <Button
               onClick={switchModeHandler}
-              style={{ textDecoration: "none" }}
+              sx={{
+                textDecoration: "none",
+                ml: -0.5,
+                color: "#AD6E4B",
+              }}
             >
               here
             </Button>
