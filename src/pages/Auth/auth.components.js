@@ -27,7 +27,7 @@ const Authentication = () => {
   };
 
   // to submit the form to db
-  const authSubmitHanlder = async (values) => {
+  const onSubmit = async (values) => {
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
@@ -53,9 +53,10 @@ const Authentication = () => {
             fullName: values.fullName,
             email: values.email,
             password: values.password,
-          })
+          }),
+          { "Content-Type": "application/json" }
         );
-
+        console.log(responseData);
         // once the user hit the (login), then the login state changes to true
         auth.login(responseData.userId, responseData.name, responseData.token);
 
@@ -80,7 +81,7 @@ const Authentication = () => {
       password: "",
     },
     validationSchema: isLoginMode ? loginSchema : signupSchema,
-    authSubmitHanlder,
+    onSubmit,
     validateOnMount: true,
   });
 
@@ -106,7 +107,7 @@ const Authentication = () => {
             bgcolor: "#370031",
           }}
         >
-          <form onsubmit={handleSubmit} autoComplete="off">
+          <form onSubmit={handleSubmit} autoComplete="off">
             {!isLoginMode && (
               <Input
                 type="text"
