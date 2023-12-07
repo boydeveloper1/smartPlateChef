@@ -34,8 +34,11 @@ export const signupSchema = yup.object().shape({
     .required("Please enter a valid email address"),
   password: yup
     .string()
-    .min(8)
-    .matches(passwordRules, { message: "Please enter a valid password" })
+    .min(8, "Password must be at least 8 characters")
+    .matches(passwordRules, {
+      message:
+        "Password must be at least 8 characters, At least one uppercase and one special character.",
+    })
     .required("Please enter a valid password"),
 });
 
@@ -46,7 +49,10 @@ export const loginSchema = yup.object().shape({
     .required("Please enter a valid email address"),
   password: yup
     .string()
-    .min(8)
-    .matches(passwordRules, { message: "Please enter a valid password" })
+    .min(8, "Password must be at least 8 characters")
+    .matches(passwordRules, {
+      message:
+        "Password must be at least 8 characters, At least one uppercase and one special character.",
+    })
     .required("Please enter a valid password"),
 });

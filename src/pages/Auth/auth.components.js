@@ -8,14 +8,61 @@ import ErrorModal from "../../components/Error-Modal/error-modal";
 import { signupSchema } from "../../utilities/validation/validation";
 import { loginSchema } from "../../utilities/validation/validation";
 
+import { AuthContext } from "../../components/context/auth-context";
+
 // custom hook for server requests
 import { useHttpClient } from "../../Hooks/http-hook";
 
 import { styles } from "./auth.styles";
 
 const Authentication = () => {
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const switchModeHandler = () => {
+    setIsLoginMode(!isLoginMode);
+    validateForm();
+  };
+
+  // to submit the form to db
+  const authSubmitHanlder = async (values) => {
+    if (isLoginMode) {
+      try {
+        const responseData = await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + "/users/login",
+          "POST",
+          JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
+          { "Content-Type": "application/json" }
+        );
+        // once the user hit the (signup), then the login state changes to true
+        auth.login(responseData.userId, responseData.name, responseData.token);
+
+        navigate("/");
+      } catch (err) {}
+    } else {
+      try {
+        const responseData = await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + "/users/signup",
+          "POST",
+          JSON.stringify({
+            fullName: values.fullName,
+            email: values.email,
+            password: values.password,
+          })
+        );
+
+        // once the user hit the (login), then the login state changes to true
+        auth.login(responseData.userId, responseData.name, responseData.token);
+
+        navigate("/");
+      } catch (error) {}
+    }
+  };
 
   const {
     values,
@@ -33,14 +80,10 @@ const Authentication = () => {
       password: "",
     },
     validationSchema: isLoginMode ? loginSchema : signupSchema,
-    // onSubmit,
+    authSubmitHanlder,
     validateOnMount: true,
   });
 
-  const switchModeHandler = () => {
-    setIsLoginMode(!isLoginMode);
-    validateForm();
-  };
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
@@ -63,59 +106,60 @@ const Authentication = () => {
             bgcolor: "#370031",
           }}
         >
-          {!isLoginMode && (
+          <form onsubmit={handleSubmit} autoComplete="off">
+            {!isLoginMode && (
+              <Input
+                type="text"
+                element="input"
+                id="fullName"
+                label="Full Name"
+                placeholder="Enter Full Name"
+                value={values.fullName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                errorText={errors.fullName}
+                className={
+                  errors.fullName && touched.fullName ? "inputs-error" : ""
+                }
+              />
+            )}
             <Input
-              type="text"
               element="input"
-              id="fullName"
-              label="Full Name"
-              placeholder="Enter Full Name"
-              value={values.fullName}
+              id="email"
+              type="email"
+              label="Email Address"
+              placeholder="Enter your Email Address"
+              value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              errorText={errors.fullName}
+              errorText={errors.email}
+              className={errors.email && touched.email ? "inputs-error" : ""}
+            />
+            <Input
+              element="input"
+              id="password"
+              type="password"
+              label="Password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              errorText={errors.password}
+              placeholder="Enter Strong Password"
               className={
-                errors.fullName && touched.fullName ? "inputs-error" : ""
+                errors.password && touched.password ? "inputs-error" : ""
               }
             />
-          )}
-          <Input
-            element="input"
-            id="email"
-            type="email"
-            label="Email Address"
-            placeholder="Enter your Email Address"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            errorText={errors.email}
-            className={errors.email && touched.email ? "inputs-error" : ""}
-          />
-          <Input
-            element="input"
-            id="password"
-            type="password"
-            label="Password"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            errorText={errors.password}
-            placeholder="Enter Stromg Password"
-            className={
-              errors.password && touched.password ? "inputs-error" : ""
-            }
-          />
-          <Button
-            onClick={handleSubmit}
-            disabled={!isValid || isLoading}
-            fullWidth
-            variant="contained"
-            size="large"
-            sx={styles.button}
-          >
-            {isLoginMode ? "LOGIN" : "SIGN UP"}
-          </Button>
-
+            <Button
+              onClick={handleSubmit}
+              disabled={!isValid || isLoading}
+              fullWidth
+              variant="contained"
+              size="large"
+              sx={styles.button}
+            >
+              {isLoginMode ? "LOGIN" : "SIGN UP"}
+            </Button>
+          </form>
           <Typography sx={{ color: "white" }}>
             {isLoginMode
               ? "Not registered yet? Register"
