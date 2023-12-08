@@ -37,7 +37,7 @@ const Header = () => {
             {!auth.isLoggedIn && (
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="You are hungry again?">
-                  <Typography
+                  <Button
                     variant="h6"
                     href="/authentication"
                     sx={{
@@ -55,7 +55,7 @@ const Header = () => {
                     }}
                   >
                     LOGIN | REGISTER
-                  </Typography>
+                  </Button>
                 </Tooltip>
               </Box>
             )}

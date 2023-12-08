@@ -7,6 +7,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { AuthContext } from "../context/auth-context";
 import { useHttpClient } from "../../Hooks/http-hook";
+import ErrorModal from "../Error-Modal/error-modal";
+import LoadingSpinner from "../Loading-Spinner/loading-spinner.components";
 
 import { styles } from "./recipe.styles";
 
@@ -28,6 +30,7 @@ const RecipeDetails = ({
   const ingredients = ingredientsList ? ingredientsList.split("\n") : [];
   const recipe = recipeList ? recipeList.split("\n") : [];
 
+  // send to backend and bd of a user
   const addToCookBook = async () => {
     try {
       const responseData = sendRequest(
