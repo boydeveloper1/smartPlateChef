@@ -39,8 +39,6 @@ const Header = () => {
                 <Tooltip title="You are hungry again?">
                   <Typography
                     variant="h6"
-                    noWrap
-                    component="a"
                     href="/authentication"
                     sx={{
                       mr: 2,
@@ -65,10 +63,8 @@ const Header = () => {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Check Cookery Book">
                   <Button
-                    onClick={logout}
                     variant="h6"
-                    noWrap
-                    component="a"
+                    href={`/${auth.userId}/dashboard`}
                     sx={{
                       mr: 2,
                       display: { xs: "flex", md: "flex" },

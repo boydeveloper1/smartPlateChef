@@ -1,10 +1,12 @@
 // RecipeDetails.js
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Typography, Button, Grid, Paper } from "@mui/material";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import StarIcon from "@mui/icons-material/Star";
 import CloseIcon from "@mui/icons-material/Close";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { AuthContext } from "../context/auth-context";
+import { useHttpClient } from "../../Hooks/http-hook";
 
 import { styles } from "./recipe.styles";
 
@@ -17,12 +19,37 @@ const RecipeDetails = ({
   cusineType,
   ocassion,
   dietary,
-  addToCookBook,
 }) => {
   const { title, ingredientsList, cookingTime, recipeList } = recipeData;
 
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext);
+
   const ingredients = ingredientsList ? ingredientsList.split("\n") : [];
   const recipe = recipeList ? recipeList.split("\n") : [];
+
+  const addToCookBook = async () => {
+    try {
+      const responseData = sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/gpt/smartplate/${auth.userId}`,
+        "POST",
+        JSON.stringify({
+          ingredients: ingredients,
+          cusineType: cusineType,
+          servings: serving,
+          occasion: ocassion,
+          dietaryPreferences: dietary,
+          title: title,
+          cookingTime: cookingTime,
+          recipe: recipe,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+    } catch (error) {}
+  };
 
   return (
     <>
