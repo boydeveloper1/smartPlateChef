@@ -1,10 +1,10 @@
 // RecipeDetails.js
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Typography, Button, Grid, Paper } from "@mui/material";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import StarIcon from "@mui/icons-material/Star";
 import CloseIcon from "@mui/icons-material/Close";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import ClearIcon from "@mui/icons-material/Clear";
 import { AuthContext } from "../context/auth-context";
 import { useHttpClient } from "../../Hooks/http-hook";
 import ErrorModal from "../Error-Modal/error-modal";
@@ -24,6 +24,8 @@ const RecipeDetails = ({
 }) => {
   const { title, ingredientsList, cookingTime, recipeList } = recipeData;
 
+  const [loaded, setLoaded] = useState(false);
+
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
 
@@ -37,25 +39,28 @@ const RecipeDetails = ({
         process.env.REACT_APP_BACKEND_URL + `/gpt/smartplate/${auth.userId}`,
         "POST",
         JSON.stringify({
-          ingredients: ingredients,
+          ingredients: ingredientsList,
           cusineType: cusineType,
           servings: serving,
           occasion: ocassion,
           dietaryPreferences: dietary,
           title: title,
           cookingTime: cookingTime,
-          recipe: recipe,
+          recipe: recipeList,
         }),
         {
           "Content-Type": "application/json",
           Authorization: "Bearer " + auth.token,
         }
       );
+      setLoaded(true);
     } catch (error) {}
   };
 
   return (
     <>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && <LoadingSpinner asOverlay />}
       <Box sx={styles.box1}></Box>
       <Box sx={styles.box3}>
         <Box sx={{ position: "relative" }}>
@@ -177,7 +182,7 @@ const RecipeDetails = ({
               <Button
                 size="large"
                 variant="contained"
-                startIcon={<HighlightOffIcon />}
+                startIcon={<ClearIcon />}
                 sx={styles.button2}
                 onClick={onClose}
               >
@@ -186,15 +191,33 @@ const RecipeDetails = ({
             </Grid>
 
             <Grid item>
-              <Button
-                size="large"
-                variant="contained"
-                onClick={addToCookBook}
-                startIcon={<StarOutlineIcon />}
-                sx={styles.button3}
-              >
-                Add to CookBook
-              </Button>
+              {!loaded && (
+                <Button
+                  size="large"
+                  variant="contained"
+                  onClick={addToCookBook}
+                  startIcon={<StarOutlineIcon />}
+                  sx={styles.button3}
+                >
+                  Add to CookBook
+                </Button>
+              )}
+              {loaded && (
+                <>
+                  <Button
+                    href={`/${auth.userId}/dashboard`}
+                    size="large"
+                    variant="contained"
+                    startIcon={<StarIcon />}
+                    sx={styles.button4}
+                  >
+                    View Cookery Book
+                  </Button>
+                  <Typography component="p" sx={{ color: "#4e3d12" }}>
+                    recipe added to cooking book.
+                  </Typography>
+                </>
+              )}
             </Grid>
           </Grid>
         </Box>

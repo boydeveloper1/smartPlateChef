@@ -16,10 +16,6 @@ const Header = () => {
   const navigate = useNavigate();
   const auth = React.useContext(AuthContext);
   const name = auth.name ? auth.name.split(" ")[0] : "";
-  const logout = () => {
-    auth.logout();
-    navigate("/");
-  };
 
   return (
     <>
@@ -66,6 +62,7 @@ const Header = () => {
                     variant="h6"
                     href={`/${auth.userId}/dashboard`}
                     sx={{
+                      border: "1.5px dashed white",
                       mr: 2,
                       display: { xs: "flex", md: "flex" },
                       fontFamily: "MONOSPACE",

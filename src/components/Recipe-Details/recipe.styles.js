@@ -148,11 +148,18 @@ export const styles = {
   },
   grid3: { py: "50px" },
   button2: {
+    textTransform: "lowercase",
     bgcolor: "black",
     "&:hover": { bgcolor: "#260b1d", color: "white" },
   },
   button3: {
+    textTransform: "lowercase",
     bgcolor: "#360030",
     "&:hover": { bgcolor: "green", color: "white" },
+  },
+  button4: {
+    bgcolor: "#360030",
+    textTransform: "lowercase",
+    "&:hover": { bgcolor: "black", color: "white" },
   },
 };
