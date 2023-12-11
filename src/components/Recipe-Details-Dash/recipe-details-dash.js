@@ -1,9 +1,7 @@
 // RecipeDetails.js
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, Grid, Paper } from "@mui/material";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import StarIcon from "@mui/icons-material/Star";
+import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import ClearIcon from "@mui/icons-material/Clear";
 import { AuthContext } from "../context/auth-context";
@@ -11,61 +9,40 @@ import { useHttpClient } from "../../Hooks/http-hook";
 import ErrorModal from "../Error-Modal/error-modal";
 import LoadingSpinner from "../Loading-Spinner/loading-spinner.components";
 
-import { styles } from "./recipe.styles";
+import { styles } from "./recipe.styles-dash";
 
 const BackgroundBox = () => <Box sx={styles.box2} />;
 
-const RecipeDetails = ({
-  recipeData,
-  onClose,
-  serving,
-  cusineType,
-  ocassion,
-  dietary,
-}) => {
-  const { title, ingredientsList, cookingTime, recipeList } = recipeData;
-
-  const [loaded, setLoaded] = useState(false);
+const RecipeDetailsDash = ({ recipeData, onClose, onDelete }) => {
+  const {
+    id,
+    title,
+    ingredients,
+    cookingTime,
+    recipe,
+    cusineType,
+    occasion,
+    servings,
+    dietaryPreferences,
+  } = recipeData;
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
 
-  const navigate = useNavigate();
-  const ingredients = ingredientsList ? ingredientsList.split("\n") : [];
-  const recipe = recipeList ? recipeList.split("\n") : [];
+  const ingredient = ingredients ? ingredients.split("\n") : [];
+  const recipes = recipe ? recipe.split("\n") : [];
 
-  const cleanedTitle =
-    title && title.startsWith('"') && title.endsWith('"')
-      ? title.slice(1, -1)
-      : title;
-
-  // send to backend and bd of a user
-  const addToCookBook = async () => {
-    if (auth.token) {
-      try {
-        const responseData = sendRequest(
-          process.env.REACT_APP_BACKEND_URL + `/gpt/smartplate/${auth.userId}`,
-          "POST",
-          JSON.stringify({
-            ingredients: ingredientsList,
-            cusineType: cusineType,
-            servings: serving,
-            occasion: ocassion,
-            dietaryPreferences: dietary,
-            title: cleanedTitle,
-            cookingTime: cookingTime,
-            recipe: recipeList,
-          }),
-          {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + auth.token,
-          }
-        );
-        setLoaded(true);
-      } catch (error) {}
-    } else {
-      navigate("/authentication");
-    }
+  // delete recipe
+  const deleteRecipe = async (id) => {
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/gpt/${id}`,
+        "DELETE",
+        null,
+        { Authorization: "Bearer " + auth.token }
+      );
+      onDelete(id);
+    } catch (error) {}
   };
 
   return (
@@ -82,7 +59,7 @@ const RecipeDetails = ({
           <Grid container sx={styles.grid1}>
             <Grid item xs={12}>
               <Typography variant="h4" sx={styles.typography3}>
-                {cleanedTitle}
+                {title}
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -97,7 +74,7 @@ const RecipeDetails = ({
                 <Typography sx={styles.typography6}>
                   List of Ingredients:
                 </Typography>
-                {ingredients.map((ingredient, index) => (
+                {ingredient.map((ingredient, index) => (
                   <Typography sx={styles.typography7} key={index}>
                     {ingredient.trim()}{" "}
                   </Typography>
@@ -109,7 +86,7 @@ const RecipeDetails = ({
                 <Typography variant="h4" sx={styles.typography9}>
                   Read Cooking Instructions Carefully:
                 </Typography>
-                {recipe.map((recipe, index) => (
+                {recipes.map((recipe, index) => (
                   <Typography sx={styles.typography10} key={index}>
                     {recipe.trim()}{" "}
                   </Typography>
@@ -133,7 +110,7 @@ const RecipeDetails = ({
                   No. of servings:
                 </Typography>
                 <Typography variant="subtitle2" sx={styles.typography4}>
-                  {serving}
+                  {servings}
                 </Typography>
               </Paper>
             </Grid>
@@ -163,7 +140,7 @@ const RecipeDetails = ({
                   Ocassion:
                 </Typography>
                 <Typography variant="subtitle2" sx={styles.typography4}>
-                  {ocassion}
+                  {occasion}
                 </Typography>
               </Paper>
             </Grid>
@@ -178,7 +155,7 @@ const RecipeDetails = ({
                   Dietary plan:
                 </Typography>
                 <Typography variant="subtitle2" sx={styles.typography4}>
-                  {dietary}
+                  {dietaryPreferences}
                 </Typography>
               </Paper>
             </Grid>
@@ -202,33 +179,18 @@ const RecipeDetails = ({
             </Grid>
 
             <Grid item>
-              {!loaded && (
-                <Button
-                  size="large"
-                  variant="contained"
-                  onClick={addToCookBook}
-                  startIcon={<StarOutlineIcon />}
-                  sx={styles.button3}
-                >
-                  Add to CookBook
-                </Button>
-              )}
-              {loaded && (
-                <>
-                  <Button
-                    href={`/${auth.userId}/dashboard`}
-                    size="large"
-                    variant="contained"
-                    startIcon={<StarIcon />}
-                    sx={styles.button4}
-                  >
-                    View Cookery Book
-                  </Button>
-                  <Typography component="p" sx={{ color: "#4e3d12" }}>
-                    recipe added to cooking book.
-                  </Typography>
-                </>
-              )}
+              <Button
+                onClick={() => {
+                  deleteRecipe(id);
+                }}
+                href={`/${auth.userId}/dashboard`}
+                size="large"
+                variant="contained"
+                startIcon={<DeleteIcon />}
+                sx={styles.button4}
+              >
+                Delete
+              </Button>
             </Grid>
           </Grid>
         </Box>
@@ -237,4 +199,4 @@ const RecipeDetails = ({
   );
 };
 
-export default RecipeDetails;
+export default RecipeDetailsDash;

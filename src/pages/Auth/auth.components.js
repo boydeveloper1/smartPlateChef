@@ -161,7 +161,7 @@ const Authentication = () => {
               {isLoginMode ? "LOGIN" : "SIGN UP"}
             </Button>
           </form>
-          <Typography sx={{ color: "white" }}>
+          <Typography sx={{ color: "white", fontSize: "14px" }}>
             {isLoginMode
               ? "Not registered yet? Register"
               : "Already a user? You can Login"}
@@ -170,8 +170,9 @@ const Authentication = () => {
               onClick={switchModeHandler}
               sx={{
                 textDecoration: "none",
-                ml: -0.5,
+                ml: -1,
                 color: "#AD6E4B",
+                fontSize: "14px",
               }}
             >
               here

@@ -7,11 +7,17 @@ import ErrorModal from "../../components/Error-Modal/error-modal";
 import LoadingSpinner from "../../components/Loading-Spinner/loading-spinner.components";
 import Footer from "../../components/Footer/footer.components";
 
+import { styles } from "./dashboard.styles";
+import RecipeDetailsDash from "../../components/Recipe-Details-Dash/recipe-details-dash";
+
 const Dashboard = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [smartPlates, setSmartPlates] = useState([]);
   const [loadedUser, setLoadedUser] = useState([]);
+  const [selectedSmartPlate, setSelectedSmartPlate] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const { userId } = useParams();
   const navigate = useNavigate();
 
@@ -26,6 +32,11 @@ const Dashboard = () => {
   const numberOfRecipes = loadedUser.smartPlates
     ? loadedUser.smartPlates.length
     : 0;
+
+  const actionAfterRecipeClicked = (smartplate) => {
+    setSelectedSmartPlate(smartplate);
+    setIsPopupOpen(true);
+  };
 
   // find the user immediately from the backend based off the userid in params
   useEffect(() => {
@@ -55,6 +66,16 @@ const Dashboard = () => {
     }
   }, [sendRequest, userId]);
 
+  // this function is used to update the state after an recipe has been deleted
+  // this function filter based on the deleted recipe
+  const smartPlateDeletedHandler = (deletedSmartPlateId) => {
+    setSmartPlates((prevsmartplate) =>
+      prevsmartplate.filter(
+        (smartPlate) => smartPlate.id !== deletedSmartPlateId
+      )
+    );
+  };
+
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
@@ -63,50 +84,26 @@ const Dashboard = () => {
           <LoadingSpinner />
         </div>
       )}
-      <Box
-        sx={{
-          p: 5,
-          mb: "10%",
-          "@media (max-width: 900px)": {
-            p: 1,
-            pt: 6,
-            mb: "30%",
-          },
-        }}
-      >
+      {/* display the popup when there is a smartplateand popup is true  */}
+      {selectedSmartPlate && isPopupOpen && (
+        <RecipeDetailsDash
+          recipeData={selectedSmartPlate}
+          onClose={() => {
+            setIsPopupOpen(false);
+            setSelectedSmartPlate(null);
+          }}
+          onDelete={smartPlateDeletedHandler}
+        />
+      )}
+      <Box sx={styles.box1}>
         <Grid container columnSpacing={18} rowSpacing={14}>
           <Grid xs={12} md={5} item>
-            <Typography
-              sx={{
-                height: "380px",
-                fontSize: "80px",
-                color: "white",
-                bgcolor: "#370031",
-                p: 4,
-                transition: "font-size 0.5s ease, padding 0.5s ease",
-                "@media (max-width: 900px)": {
-                  fontSize: "55px",
-                  p: 2,
-                  height: "65%",
-                },
-              }}
-            >
+            <Typography sx={styles.typography1}>
               seems you're always hungry
               <strong> {name} ? </strong>
             </Typography>
-            <Typography
-              sx={{
-                fontSize: "34px",
-                color: "black",
-                marginTop: 3,
-                fontWeight: "bold",
-                opacity: 0.8,
-                transition: "opacity 0.5s ease, font-size 0.5s ease",
-              }}
-            >
-              choose next step:
-            </Typography>
-            <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
+            <Typography sx={styles.typography2}>choose next step:</Typography>
+            <Box sx={styles.box2}>
               <Button
                 size="large"
                 href="/#begin-now"
@@ -123,39 +120,14 @@ const Dashboard = () => {
               >
                 Create another recipe
               </Button>
-              <Button
-                size="large"
-                onClick={logout}
-                sx={{
-                  bgcolor: "#77006a",
-                  color: "white",
-                  border: "1px solid #370031",
-                  transition: "background 0.5s ease, color 0.5s ease",
-                  "&:hover": {
-                    bgcolor: "#5c005b",
-                  },
-                }}
-              >
+              <Button size="large" onClick={logout} sx={styles.button1}>
                 Logout
               </Button>
             </Box>
           </Grid>
 
           <Grid xs={12} md={7} item>
-            <Paper
-              sx={{
-                border: "0.5px solid white",
-                p: 4,
-                height: "380px",
-                overflow: "auto",
-                backgroundImage: 'url("/images/diagonales-decalees.png")',
-                verticalAlign: "center",
-                "@media (max-width: 900px)": {
-                  p: 0,
-                  height: "400px",
-                },
-              }}
-            >
+            <Paper sx={styles.paper}>
               <Typography
                 sx={{
                   fontSize: "20px",
@@ -170,17 +142,7 @@ const Dashboard = () => {
               >
                 explore cookery book:
               </Typography>
-              <Typography
-                sx={{
-                  fontSize: "30px",
-                  fontWeight: "bold",
-                  color: "#712700",
-
-                  "@media (max-width: 900px)": {
-                    fontSize: "22px",
-                  },
-                }}
-              >
+              <Typography sx={styles.typography3}>
                 you currently have{" "}
                 <span style={{ fontSize: "40px" }}>{numberOfRecipes}</span>{" "}
                 {numberOfRecipes === 1 || numberOfRecipes === 0
@@ -192,71 +154,19 @@ const Dashboard = () => {
                   smartplate.title &&
                   smartplate.title.startsWith('"') &&
                   smartplate.title.endsWith('"')
-                    ? smartplate.title.slice(1, -1) // Remove the quotation marks
+                    ? smartplate.title.slice(1, -1)
                     : smartplate.title;
                 return (
-                  <Box
-                    key={index}
-                    sx={{
-                      margin: "5px 0 13px",
-                      borderRadius: "12px",
-                      bgcolor: "#370031",
-                      height: "100px",
-                      width: "90%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      p: 2,
-                      pl: 4,
-
-                      position: "relative",
-                      transition: "transform 0.5s ease, box-shadow 0.5s ease",
-                      "&:hover": {
-                        transform: "scale(1.05)",
-                        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                        bgcolor: "#4a003f",
-                      },
-                      "@media (max-width: 900px)": {
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "start",
-                        pl: 2,
-                        transition: "transform 0.5s ease, box-shadow 0.5s ease",
-                        "&:hover": {
-                          transform: "scale(1.005)",
-                          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                          bgcolor: "#4a003f",
-                        },
-                      },
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        color: "white",
-                        fontSize: "18px",
-                        "@media (max-width: 900px)": {
-                          fontSize: "13px",
-                        },
-                      }}
-                    >
+                  <Box key={index} sx={styles.box3}>
+                    <Typography sx={styles.typography4}>
                       {cleanedTitle}
                     </Typography>
                     <Button
-                      sx={{
-                        marginLeft: 3,
-                        bgcolor: "#87007c",
-                        color: "white",
-                        borderRadius: "5px",
-                        "&:hover": {
-                          bgcolor: "#a80094",
-                        },
-                        "@media (max-width: 900px)": {
-                          marginLeft: 0,
-                          marginTop: 2,
-                        },
-                      }}
+                      sx={styles.button2}
+                      // saved the clicked recipe in the state to then render to a popup screen
+                      onClick={() => actionAfterRecipeClicked(smartplate)}
                     >
-                      View More
+                      More Details
                     </Button>
                   </Box>
                 );

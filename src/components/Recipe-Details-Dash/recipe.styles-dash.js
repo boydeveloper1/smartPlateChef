@@ -40,7 +40,7 @@ export const styles = {
     backgroundPosition: "center",
     backgroundRepeat: "repeat",
     backgroundColor: "transparent",
-    filter: "brightness(70%) opacity(0.3)",
+    filter: "brightness(70%) opacity(0.22)",
     pointerEvents: "none",
   },
   box1: {
@@ -60,7 +60,7 @@ export const styles = {
     width: "90%",
     maxHeight: "90%",
     overflowY: "auto",
-    backgroundColor: "white",
+    backgroundColor: "#360030",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -72,7 +72,7 @@ export const styles = {
     top: 10,
     right: 10,
     backgroundColor: "transparent",
-    color: "black",
+    color: "white",
   },
   grid1: {
     alignItems: "center",
@@ -81,7 +81,7 @@ export const styles = {
   },
   typography3: {
     fontSize: "27px",
-    bgcolor: "#360030",
+    bgcolor: "#4e3d12",
     marginBottom: 2,
     marginTop: "60px",
     color: "white",
@@ -130,7 +130,7 @@ export const styles = {
   },
   typography9: {
     fontSize: "30px",
-    color: "#360030",
+    color: "white",
     marginBottom: 2,
     fontWeight: "bold",
     "@media (max-width: 900px)": {
@@ -138,11 +138,11 @@ export const styles = {
       mt: 6,
     },
   },
-  typography10: { lineHeight: "25px", paddingBottom: "12px" },
+  typography10: { lineHeight: "25px", paddingBottom: "12px", color: "#d6d6d6" },
   typography11: {
     fontSize: "20px",
     fontWeight: "bold",
-    color: "360030",
+    color: "white",
     paddingTop: 3,
     mb: 4,
   },
@@ -158,7 +158,7 @@ export const styles = {
     "&:hover": { bgcolor: "green", color: "white" },
   },
   button4: {
-    bgcolor: "#360030",
+    bgcolor: "#660000",
     textTransform: "lowercase",
     "&:hover": { bgcolor: "black", color: "white" },
   },
