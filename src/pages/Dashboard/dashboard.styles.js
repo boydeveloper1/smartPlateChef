@@ -22,17 +22,25 @@ export const styles = {
     },
   },
   typography2: {
-    fontSize: "34px",
+    fontSize: "25px",
     color: "black",
     marginTop: 3,
     fontWeight: "bold",
     opacity: 0.8,
     transition: "opacity 0.5s ease, font-size 0.5s ease",
-    "@media (max-width: 900px)": {
-      fontSize: "20px",
-    },
+    "@media (max-width: 900px)": {},
   },
   box2: { display: "flex", gap: 2, marginTop: 2 },
+  button3: {
+    bgcolor: "transparent",
+    color: "#370031",
+    border: "1px solid #370031",
+    transition: "background 0.5s ease, color 0.5s ease",
+    "&:hover": {
+      bgcolor: "#370031",
+      color: "white",
+    },
+  },
   button1: {
     bgcolor: "#77006a",
     color: "white",
@@ -41,6 +49,11 @@ export const styles = {
     "&:hover": {
       bgcolor: "#5c005b",
     },
+  },
+  disabledButton: {
+    bgcolor: "lightgray",
+    color: "darkgray",
+    border: "1px solid darkgray",
   },
   paper: {
     border: "0.5px solid white",

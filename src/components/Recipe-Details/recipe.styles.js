@@ -155,7 +155,7 @@ export const styles = {
   button3: {
     textTransform: "lowercase",
     bgcolor: "#360030",
-    "&:hover": { bgcolor: "green", color: "white" },
+    "&:hover": { bgcolor: "#005f00", color: "white" },
   },
   button4: {
     bgcolor: "#360030",

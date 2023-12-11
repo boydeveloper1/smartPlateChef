@@ -1,5 +1,6 @@
 // RecipeDetails.js
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, Grid, Paper } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
@@ -8,6 +9,7 @@ import { AuthContext } from "../context/auth-context";
 import { useHttpClient } from "../../Hooks/http-hook";
 import ErrorModal from "../Error-Modal/error-modal";
 import LoadingSpinner from "../Loading-Spinner/loading-spinner.components";
+import BasicModal from "../Modal/modal.components";
 
 import { styles } from "./recipe.styles-dash";
 
@@ -26,14 +28,27 @@ const RecipeDetailsDash = ({ recipeData, onClose, onDelete }) => {
     dietaryPreferences,
   } = recipeData;
 
+  const navigate = useNavigate();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const auth = useContext(AuthContext);
 
   const ingredient = ingredients ? ingredients.split("\n") : [];
   const recipes = recipe ? recipe.split("\n") : [];
 
+  // to show modal before deleting
+  const showDeleteWarningHandler = () => {
+    setShowConfirmModal(true);
+  };
+
+  //  to unshow modal before deleting
+  const cancelDeleteHandler = () => {
+    setShowConfirmModal(false);
+  };
+
   // delete recipe
   const deleteRecipe = async (id) => {
+    setShowConfirmModal(false);
     try {
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL + `/gpt/${id}`,
@@ -42,6 +57,7 @@ const RecipeDetailsDash = ({ recipeData, onClose, onDelete }) => {
         { Authorization: "Bearer " + auth.token }
       );
       onDelete(id);
+      onClose();
     } catch (error) {}
   };
 
@@ -49,6 +65,16 @@ const RecipeDetailsDash = ({ recipeData, onClose, onDelete }) => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
+      <BasicModal
+        open={showConfirmModal}
+        close={cancelDeleteHandler}
+        onConfirm={() => {
+          deleteRecipe(id);
+        }}
+        onCancel={cancelDeleteHandler}
+        header="Delete Confirmation"
+        description="Are you sure you want to delete this recipe?"
+      />
       <Box sx={styles.box1}></Box>
       <Box sx={styles.box3}>
         <Box sx={{ position: "relative" }}>
@@ -180,10 +206,8 @@ const RecipeDetailsDash = ({ recipeData, onClose, onDelete }) => {
 
             <Grid item>
               <Button
-                onClick={() => {
-                  deleteRecipe(id);
-                }}
-                href={`/${auth.userId}/dashboard`}
+                onClick={showDeleteWarningHandler}
+                // href={`/${auth.userId}/dashboard`}
                 size="large"
                 variant="contained"
                 startIcon={<DeleteIcon />}

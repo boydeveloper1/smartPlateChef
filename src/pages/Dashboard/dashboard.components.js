@@ -14,7 +14,6 @@ const Dashboard = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [smartPlates, setSmartPlates] = useState([]);
-  const [loadedUser, setLoadedUser] = useState([]);
   const [selectedSmartPlate, setSelectedSmartPlate] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -29,9 +28,7 @@ const Dashboard = () => {
 
   const name = auth.name ? auth.name.split(" ")[0] : "";
 
-  const numberOfRecipes = loadedUser.smartPlates
-    ? loadedUser.smartPlates.length
-    : 0;
+  const numberOfRecipes = smartPlates ? smartPlates.length : 0;
 
   const actionAfterRecipeClicked = (smartplate) => {
     setSelectedSmartPlate(smartplate);
@@ -40,30 +37,16 @@ const Dashboard = () => {
 
   // find the user immediately from the backend based off the userid in params
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchSmartPlate = async () => {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/gpt/user/${userId}`
         );
 
-        setLoadedUser(responseData.user);
+        setSmartPlates(responseData.smartPlates);
       } catch (error) {}
     };
-    fetchUsers();
-
-    // if there is a loaded user then api call goes to fetch all saved smartplate for the user
-    if (loadedUser) {
-      const fetchSmartPlate = async () => {
-        try {
-          const responseData = await sendRequest(
-            `${process.env.REACT_APP_BACKEND_URL}/gpt/user/${userId}`
-          );
-
-          setSmartPlates(responseData.smartPlates);
-        } catch (error) {}
-      };
-      fetchSmartPlate();
-    }
+    fetchSmartPlate();
   }, [sendRequest, userId]);
 
   // this function is used to update the state after an recipe has been deleted
@@ -104,20 +87,7 @@ const Dashboard = () => {
             </Typography>
             <Typography sx={styles.typography2}>choose next step:</Typography>
             <Box sx={styles.box2}>
-              <Button
-                size="large"
-                href="/#begin-now"
-                sx={{
-                  bgcolor: "transparent",
-                  color: "#370031",
-                  border: "1px solid #370031",
-                  transition: "background 0.5s ease, color 0.5s ease",
-                  "&:hover": {
-                    bgcolor: "#370031",
-                    color: "white",
-                  },
-                }}
-              >
+              <Button size="large" href="/#begin-now" sx={styles.button3}>
                 Create another recipe
               </Button>
               <Button size="large" onClick={logout} sx={styles.button1}>
@@ -172,6 +142,21 @@ const Dashboard = () => {
                 );
               })}
             </Paper>
+            <Typography sx={styles.typography2}>clear cookery book:</Typography>
+
+            <Box sx={styles.box2}>
+              <Button
+                size="large"
+                onClick={logout}
+                sx={{
+                  ...styles.button1,
+                  ...(numberOfRecipes === 0 && styles.disabledButton),
+                }}
+                disabled={numberOfRecipes === 0}
+              >
+                Delete all Recipe
+              </Button>
+            </Box>
           </Grid>
         </Grid>
       </Box>
