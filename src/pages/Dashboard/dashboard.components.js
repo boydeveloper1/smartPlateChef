@@ -6,9 +6,10 @@ import { useHttpClient } from "../../Hooks/http-hook";
 import ErrorModal from "../../components/Error-Modal/error-modal";
 import LoadingSpinner from "../../components/Loading-Spinner/loading-spinner.components";
 import Footer from "../../components/Footer/footer.components";
+import RecipeDetailsDash from "../../components/Recipe-Details-Dash/recipe-details-dash";
+import BasicModal from "../../components/Modal/modal.components";
 
 import { styles } from "./dashboard.styles";
-import RecipeDetailsDash from "../../components/Recipe-Details-Dash/recipe-details-dash";
 
 const Dashboard = () => {
   const auth = useContext(AuthContext);
@@ -16,9 +17,14 @@ const Dashboard = () => {
   const [smartPlates, setSmartPlates] = useState([]);
   const [selectedSmartPlate, setSelectedSmartPlate] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const { userId } = useParams();
   const navigate = useNavigate();
+
+  const name = auth.name ? auth.name.split(" ")[0] : "";
+
+  const numberOfRecipes = smartPlates ? smartPlates.length : 0;
 
   // to logout
   const logout = () => {
@@ -26,16 +32,27 @@ const Dashboard = () => {
     navigate("/authentication");
   };
 
-  const name = auth.name ? auth.name.split(" ")[0] : "";
+  // to show modal before deleting
+  const showDeleteWarningHandler = () => {
+    setShowConfirmModal(true);
+  };
 
-  const numberOfRecipes = smartPlates ? smartPlates.length : 0;
+  //  to unshow modal before deleting
+  const cancelDeleteHandler = () => {
+    setShowConfirmModal(false);
+  };
 
   const actionAfterRecipeClicked = (smartplate) => {
     setSelectedSmartPlate(smartplate);
     setIsPopupOpen(true);
   };
 
-  // find the user immediately from the backend based off the userid in params
+  const onClose = () => {
+    setIsPopupOpen(false);
+    setSelectedSmartPlate(null);
+  };
+
+  // find the smartplates from the user immediately from the backend based off the userid in params
   useEffect(() => {
     const fetchSmartPlate = async () => {
       try {
@@ -49,7 +66,7 @@ const Dashboard = () => {
     fetchSmartPlate();
   }, [sendRequest, userId]);
 
-  // this function is used to update the state after an recipe has been deleted
+  // this function is used to update the state after a recipe has been deleted
   // this function filter based on the deleted recipe
   const smartPlateDeletedHandler = (deletedSmartPlateId) => {
     setSmartPlates((prevsmartplate) =>
@@ -57,6 +74,20 @@ const Dashboard = () => {
         (smartPlate) => smartPlate.id !== deletedSmartPlateId
       )
     );
+  };
+
+  // delete all recipe from cookery book
+  const deleteRecipe = async () => {
+    setShowConfirmModal(false);
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/gpt/all/${auth.userId}`,
+        "DELETE",
+        null,
+        { Authorization: "Bearer " + auth.token }
+      );
+      setSmartPlates([]);
+    } catch (error) {}
   };
 
   return (
@@ -67,14 +98,21 @@ const Dashboard = () => {
           <LoadingSpinner />
         </div>
       )}
+      <BasicModal
+        open={showConfirmModal}
+        close={cancelDeleteHandler}
+        onConfirm={() => {
+          deleteRecipe();
+        }}
+        onCancel={cancelDeleteHandler}
+        header="Delete Confirmation"
+        description="Are you sure you want to delete all recipes from your cookery book?"
+      />
       {/* display the popup when there is a smartplateand popup is true  */}
       {selectedSmartPlate && isPopupOpen && (
         <RecipeDetailsDash
           recipeData={selectedSmartPlate}
-          onClose={() => {
-            setIsPopupOpen(false);
-            setSelectedSmartPlate(null);
-          }}
+          onClose={onClose}
           onDelete={smartPlateDeletedHandler}
         />
       )}
@@ -98,18 +136,7 @@ const Dashboard = () => {
 
           <Grid xs={12} md={7} item>
             <Paper sx={styles.paper}>
-              <Typography
-                sx={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                  color: "black",
-
-                  "@media (max-width: 900px)": {
-                    paddingTop: "30px",
-                    fontSize: "20px",
-                  },
-                }}
-              >
+              <Typography sx={styles.typography5}>
                 explore cookery book:
               </Typography>
               <Typography sx={styles.typography3}>
@@ -147,7 +174,7 @@ const Dashboard = () => {
             <Box sx={styles.box2}>
               <Button
                 size="large"
-                onClick={logout}
+                onClick={showDeleteWarningHandler}
                 sx={{
                   ...styles.button1,
                   ...(numberOfRecipes === 0 && styles.disabledButton),

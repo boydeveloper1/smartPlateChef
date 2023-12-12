@@ -77,7 +77,7 @@ export const styles = {
     marginBottom: "0.5rem",
     "@media (max-width: 900px)": {
       fontSize: "15px",
-      marginBottom: "0.5rem",
+      marginBottom: "0.2rem",
     },
   },
 

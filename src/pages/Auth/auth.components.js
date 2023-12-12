@@ -89,24 +89,8 @@ const Authentication = () => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "85vh",
-          width: "100%",
-        }}
-      >
-        <Paper
-          sx={{
-            mx: 2,
-            width: "400px",
-            px: 3,
-            py: 4,
-            bgcolor: "#370031",
-          }}
-        >
+      <Box sx={styles.box}>
+        <Paper sx={styles.paper}>
           <form onSubmit={handleSubmit} autoComplete="off">
             {!isLoginMode && (
               <Input
@@ -145,13 +129,15 @@ const Authentication = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               errorText={errors.password}
-              placeholder="Enter Strong Password"
+              placeholder={
+                isLoginMode ? "Enter Password" : "Enter Stromg Password"
+              }
               className={
                 errors.password && touched.password ? "inputs-error" : ""
               }
             />
             <Button
-              onClick={handleSubmit}
+              type="submit"
               disabled={!isValid || isLoading}
               fullWidth
               variant="contained"
@@ -161,20 +147,12 @@ const Authentication = () => {
               {isLoginMode ? "LOGIN" : "SIGN UP"}
             </Button>
           </form>
-          <Typography sx={{ color: "white", fontSize: "14px" }}>
+          <Typography sx={styles.typography1}>
             {isLoginMode
               ? "Not registered yet? Register"
               : "Already a user? You can Login"}
 
-            <Button
-              onClick={switchModeHandler}
-              sx={{
-                textDecoration: "none",
-                ml: -1,
-                color: "#AD6E4B",
-                fontSize: "14px",
-              }}
-            >
+            <Button onClick={switchModeHandler} sx={styles.button1}>
               here
             </Button>
           </Typography>

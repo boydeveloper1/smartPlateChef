@@ -11,7 +11,7 @@ export const style = {
     p: 4,
   },
   typography: { color: "white" },
-  typography1: { mt: 2, color: "white" },
+  typography1: { mt: 2, color: "#d9d9d9" },
   box1: {
     display: "flex",
     justifyContent: "space-between",

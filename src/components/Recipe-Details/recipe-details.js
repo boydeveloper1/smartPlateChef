@@ -74,7 +74,7 @@ const RecipeDetails = ({
       {isLoading && <LoadingSpinner asOverlay />}
       <Box sx={styles.box1}></Box>
       <Box sx={styles.box3}>
-        <Box sx={{ position: "relative" }}>
+        <Box sx={styles.box5}>
           <BackgroundBox />
           <Button onClick={onClose} sx={styles.button1}>
             <CloseIcon fontSize={"medium"} />

@@ -21,7 +21,7 @@ const HeroBanner = () => {
       <BackgroundBox />
       <Box sx={styles.contentBox} className="hero-content">
         <DoubleHeader
-          subheading={"Balanced diet today, tomorrow and forever.."}
+          subheading={"Balanced diet today, tomorrow and forever"}
           heading={`Let's Eat Good!`}
           subHeadingStyles={styles.subHeadingStyles}
           headingStyles={styles.headingStyles}

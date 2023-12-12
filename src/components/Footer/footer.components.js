@@ -11,7 +11,7 @@ const Footer = () => {
           container
           direction="column"
           alignItems="center"
-          sx={{ paddingTop: "80px" }}
+          sx={styles.grid7}
         >
           <img
             src="/images/smart2.png"
@@ -36,7 +36,7 @@ const Footer = () => {
             Powered By:
           </Typography>
           <img src="/images/gpt.png" alt="Logo" style={{ width: "50%" }} />
-          <Box sx={{ display: "block" }}>
+          <Box sx={styles.box3}>
             <Typography variant="body2" sx={styles.typography3}>
               TURBO
             </Typography>

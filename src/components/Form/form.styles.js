@@ -40,7 +40,7 @@ export const styles = {
     fontWeight: "bold",
     marginBottom: "3rem",
     "@media (max-width: 900px)": {
-      fontSize: "35px",
+      fontSize: "30px",
     },
   },
   ss: {
@@ -48,5 +48,10 @@ export const styles = {
     fontStyle: "italic",
     color: "#ce8964",
     fontSize: "24px",
+    "@media (max-width: 900px)": {
+      fontSize: "15px",
+      marginBottom: "0.2rem",
+    },
   },
+  box3: { position: "relative" },
 };

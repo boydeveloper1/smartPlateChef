@@ -15,7 +15,6 @@ import RecipeDetails from "../Recipe-Details/recipe-details";
 const BackgroundBox = () => <Box sx={styles.box2} />;
 
 const Form = () => {
-  const [isFavourite, setIsFavourite] = useState(false);
   const [loadedData, setLoadedData] = useState(null);
   const { isLoading, error, clearError, sendRequest } = useHttpClient();
 

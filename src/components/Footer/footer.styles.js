@@ -1,4 +1,5 @@
 export const styles = {
+  grid7: { paddingTop: "80px" },
   grid1: {
     background: "linear-gradient(to right, black 0%, #e9f27c 100%)",
     color: "black",
@@ -39,4 +40,5 @@ export const styles = {
   grid6: { justifyContent: "center" },
   box1: { listStyle: "none", padding: 0, px: "10px" },
   box2: { marginBottom: 1, color: "black" },
+  box3: { display: "block" },
 };

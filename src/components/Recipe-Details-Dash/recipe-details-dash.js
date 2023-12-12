@@ -1,6 +1,5 @@
 // RecipeDetails.js
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, Grid, Paper } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
@@ -28,7 +27,6 @@ const RecipeDetailsDash = ({ recipeData, onClose, onDelete }) => {
     dietaryPreferences,
   } = recipeData;
 
-  const navigate = useNavigate();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const auth = useContext(AuthContext);
@@ -77,7 +75,7 @@ const RecipeDetailsDash = ({ recipeData, onClose, onDelete }) => {
       />
       <Box sx={styles.box1}></Box>
       <Box sx={styles.box3}>
-        <Box sx={{ position: "relative" }}>
+        <Box sx={styles.box5}>
           <BackgroundBox />
           <Button onClick={onClose} sx={styles.button1}>
             <CloseIcon fontSize={"medium"} />

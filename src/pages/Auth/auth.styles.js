@@ -21,4 +21,25 @@ export const styles = {
       mb: "5%",
     },
   },
+  box: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "85vh",
+    width: "100%",
+  },
+  paper: {
+    mx: 2,
+    width: "400px",
+    px: 3,
+    py: 4,
+    bgcolor: "#370031",
+  },
+  typography1: { color: "white", fontSize: "14px" },
+  button1: {
+    textDecoration: "none",
+    ml: -1,
+    color: "#AD6E4B",
+    fontSize: "14px",
+  },
 };

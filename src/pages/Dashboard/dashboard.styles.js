@@ -18,7 +18,7 @@ export const styles = {
     "@media (max-width: 900px)": {
       fontSize: "55px",
       p: 2,
-      height: "65%",
+      height: "auto",
     },
   },
   typography2: {
@@ -28,7 +28,9 @@ export const styles = {
     fontWeight: "bold",
     opacity: 0.8,
     transition: "opacity 0.5s ease, font-size 0.5s ease",
-    "@media (max-width: 900px)": {},
+    "@media (max-width: 900px)": {
+      fontSize: "20px",
+    },
   },
   box2: { display: "flex", gap: 2, marginTop: 2 },
   button3: {
@@ -65,6 +67,7 @@ export const styles = {
     "@media (max-width: 900px)": {
       p: 0,
       height: "400px",
+      marginTop: "-60px",
     },
   },
   typography3: {
@@ -127,6 +130,16 @@ export const styles = {
     "@media (max-width: 900px)": {
       marginLeft: 0,
       marginTop: 2,
+    },
+  },
+  typography5: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    color: "black",
+
+    "@media (max-width: 900px)": {
+      paddingTop: "30px",
+      fontSize: "20px",
     },
   },
 };

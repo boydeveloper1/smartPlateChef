@@ -3,19 +3,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
+import { style } from "./error-modal.styles";
 
 const NestedModal = ({ onClear, error }) => {
   const [open, setOpen] = React.useState(false);
@@ -28,14 +16,7 @@ const NestedModal = ({ onClear, error }) => {
 
   return (
     <>
-      <Button
-        sx={{
-          bgcolor: "white",
-          color: "#360030",
-          "&:hover": { bgcolor: "#260b1d", color: "white" },
-        }}
-        onClick={handleOpen}
-      >
+      <Button sx={style.button} onClick={handleOpen}>
         View error
       </Button>
       <Modal
@@ -44,7 +25,7 @@ const NestedModal = ({ onClear, error }) => {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 300 }}>
+        <Box sx={{ ...style.box, width: 300 }}>
           <p id="child-modal-description">{error} </p>
           <Button
             sx={{
@@ -76,7 +57,7 @@ const ErrorModal = ({ onClear, error }) => {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style }}>
+        <Box sx={style.box}>
           <h2 id="parent-modal-title">Yikes! an error just occurred</h2>
           <p id="parent-modal-description">
             Do not worry so much, check error below
