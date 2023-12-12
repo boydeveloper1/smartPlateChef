@@ -31,7 +31,7 @@ const Header = () => {
               <img className="logo" src="/images/smart.png"></img>
             </Link>
             {!auth.isLoggedIn && (
-              <Box sx={{ flexGrow: 0 }}>
+              <Box>
                 <Tooltip title="You are hungry again?">
                   <Button
                     variant="h6"
@@ -47,6 +47,7 @@ const Header = () => {
                       textDecoration: "none",
                       "@media (max-width: 900px)": {
                         fontSize: "8px",
+                        mr: "-9px",
                       },
                     }}
                   >
@@ -56,7 +57,7 @@ const Header = () => {
               </Box>
             )}
             {auth.isLoggedIn && (
-              <Box sx={{ flexGrow: 0 }}>
+              <Box>
                 <Tooltip title="Check Cookery Book">
                   <Button
                     variant="h6"
@@ -73,6 +74,7 @@ const Header = () => {
                       textDecoration: "none",
                       "@media (max-width: 900px)": {
                         fontSize: "8px",
+                        mr: "-2px",
                       },
                     }}
                   >

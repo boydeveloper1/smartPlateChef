@@ -16,7 +16,7 @@ export const styles = {
     p: 4,
     transition: "font-size 0.5s ease, padding 0.5s ease",
     "@media (max-width: 900px)": {
-      fontSize: "55px",
+      fontSize: "50px",
       p: 2,
       height: "auto",
     },

@@ -41,7 +41,7 @@ const Details = () => {
                 Dietary Preferences
               </Typography>
               <Typography variant="subtitle2" sx={styles.typography4}>
-                Choose between variety of dietary for personalization.
+                Choose between varieties of dietary for personalization.
               </Typography>
             </Paper>
           </Grid>
