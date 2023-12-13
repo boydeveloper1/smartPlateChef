@@ -1,14 +1,16 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
 import { AuthContext } from "./components/context/auth-context";
 import { useAuth } from "./Hooks/auth-hook";
-import Header from "./components/Header/header.components";
-import Home from "./pages/Home/home.components";
-import Authentication from "./pages/Auth/auth.components";
-import Dashboard from "./pages/Dashboard/dashboard.components";
+import LoadingSpinner from "./components/Loading-Spinner/loading-spinner.components";
+
+const Header = lazy(() => import("./components/Header/header.components"));
+const Home = lazy(() => import("./pages/Home/home.components"));
+const Authentication = lazy(() => import("./pages/Auth/auth.components"));
+const Dashboard = lazy(() => import("./pages/Dashboard/dashboard.components"));
 
 const App = () => {
   const { token, login, logout, userId, name } = useAuth();
@@ -32,22 +34,30 @@ const App = () => {
   }
 
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: !!token,
-        token: token,
-        name: name,
-        userId: userId,
-        login: login,
-        logout: logout,
-      }}
+    <Suspense
+      fallback={
+        <div>
+          <LoadingSpinner />
+        </div>
+      }
     >
-      <Routes>
-        <Route path="/" element={<Header />}>
-          {routes}
-        </Route>
-      </Routes>
-    </AuthContext.Provider>
+      <AuthContext.Provider
+        value={{
+          isLoggedIn: !!token,
+          token: token,
+          name: name,
+          userId: userId,
+          login: login,
+          logout: logout,
+        }}
+      >
+        <Routes>
+          <Route path="/" element={<Header />}>
+            {routes}
+          </Route>
+        </Routes>
+      </AuthContext.Provider>
+    </Suspense>
   );
 };
 

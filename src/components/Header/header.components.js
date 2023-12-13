@@ -1,9 +1,8 @@
 import * as React from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -13,7 +12,6 @@ import "./header.styles.css";
 import { Button } from "@mui/material";
 
 const Header = () => {
-  const navigate = useNavigate();
   const auth = React.useContext(AuthContext);
   const name = auth.name ? auth.name.split(" ")[0] : "";
 
