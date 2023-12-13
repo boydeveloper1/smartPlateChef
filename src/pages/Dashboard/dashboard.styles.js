@@ -9,13 +9,13 @@ export const styles = {
     },
   },
   typography1: {
-    height: "380px",
-    fontSize: "80px",
+    height: "auto",
+    fontSize: "60px",
     color: "white",
     bgcolor: "#370031",
     p: 4,
     transition: "font-size 0.5s ease, padding 0.5s ease",
-    "@media (max-width: 900px)": {
+    "@media (max-width: 960px)": {
       fontSize: "50px",
       p: 2,
       height: "auto",
