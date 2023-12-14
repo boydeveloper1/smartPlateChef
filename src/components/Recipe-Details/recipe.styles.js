@@ -40,7 +40,7 @@ export const styles = {
     backgroundPosition: "center",
     backgroundRepeat: "repeat",
     backgroundColor: "transparent",
-    filter: "brightness(70%) opacity(0.3)",
+    filter: "brightness(70%) opacity(0.22)",
     pointerEvents: "none",
   },
   box1: {
@@ -162,5 +162,5 @@ export const styles = {
     textTransform: "lowercase",
     "&:hover": { bgcolor: "black", color: "white" },
   },
-  button5: { position: "relative" },
+  box5: { position: "relative" },
 };
