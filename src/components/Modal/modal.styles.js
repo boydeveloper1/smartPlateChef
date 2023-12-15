@@ -9,9 +9,18 @@ export const style = {
     border: "2px solid #242424",
     boxShadow: 24,
     p: 4,
+    "@media (max-width: 900px)": {
+      width: "80%",
+    },
   },
   typography: { color: "white" },
-  typography1: { mt: 2, color: "#d9d9d9" },
+  typography1: {
+    mt: 2,
+    color: "#d9d9d9",
+    "@media (max-width: 900px)": {
+      fontSize: "1px",
+    },
+  },
   box1: {
     display: "flex",
     justifyContent: "space-between",
