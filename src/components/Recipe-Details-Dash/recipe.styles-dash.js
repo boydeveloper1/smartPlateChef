@@ -88,9 +88,10 @@ export const styles = {
     textAlign: "center",
     padding: "10px 20px 10px 20px",
     "@media (max-width: 900px)": {
-      fontSize: "15px",
-      lineHeight: "24px",
+      fontSize: "16px",
+      lineHeight: "25px",
       padding: "10px 10px 10px 10px",
+      bgcolor: "transparent",
     },
   },
   typography5: {
@@ -134,11 +135,16 @@ export const styles = {
     marginBottom: 2,
     fontWeight: "bold",
     "@media (max-width: 900px)": {
-      fontSize: "20px",
+      fontSize: "15px",
       mt: 6,
     },
   },
-  typography10: { lineHeight: "25px", paddingBottom: "12px", color: "#d6d6d6" },
+  typography10: {
+    lineHeight: "25px",
+    paddingBottom: "12px",
+    color: "#d6d6d6",
+    fontSize: "14px",
+  },
   typography11: {
     fontSize: "20px",
     fontWeight: "bold",

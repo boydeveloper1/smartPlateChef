@@ -18,6 +18,8 @@ export const styles = {
     backgroundColor: "#eaf27c",
     color: "black",
     border: "thick double #eaf27c",
+    textTransform: "none",
+
     "&:hover": {
       backgroundColor: "#ad6e4b",
       border: "thick double #AD6E4B",

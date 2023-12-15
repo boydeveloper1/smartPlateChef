@@ -23,6 +23,7 @@
   padding: 1rem;
   margin-top: 0.5rem;
   box-sizing: border-box;
+  outline-color: black;
 }
 
 .form-control input:focus,
@@ -43,6 +44,7 @@
   appearance: none;
   background: #fff;
   cursor: pointer;
+  color: black;
 }
 
 /* Invalid State Styles */
@@ -87,9 +89,11 @@ datalist {
   margin: 0;
   padding: 0;
   margin-top: 2%;
+  color: #ad6e4b;
+  background: #ad6e4b;
 }
 
-.form-control input[type="range"]::-webkit-slider-runnable-track,
+/* .form-control input[type="range"]::-webkit-slider-runnable-track,
 .form-control input[type="range"]::-moz-range-track,
 .form-control input[type="range"]::-ms-track {
   width: 100%;
@@ -97,6 +101,8 @@ datalist {
   cursor: pointer;
   background: #ddd;
   border-radius: 4px;
+  appearance: none;
+  color: #ad6e4b;
 }
 
 .form-control input[type="range"]::-webkit-slider-thumb,
@@ -110,20 +116,26 @@ datalist {
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -6px;
-}
+} */
 
-.form-control input[type="range"]:focus::-ms-fill-lower,
+/* .form-control input[type="range"]:focus::-ms-fill-lower,
 .form-control input[type="range"]:focus::-ms-fill-upper {
   background: #ce8964;
-}
+} */
 
 .form-control--invalid label,
 .inputs-error p {
-  color: white;
+  color: #b3b3b3;
 }
 .inputs-error select,
 .inputs-error input,
 .inputs-error textarea {
   border-color: red;
   background: #ffd1d1;
+}
+@media only screen and (max-width: 900px) {
+  .form-control--invalid label,
+  .inputs-error p {
+    font-size: 11px;
+  }
 }

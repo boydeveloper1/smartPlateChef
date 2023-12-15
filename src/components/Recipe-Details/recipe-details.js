@@ -225,7 +225,7 @@ const RecipeDetails = ({
                     View Cookery Book
                   </Button>
                   <Typography component="p" sx={{ color: "#4e3d12" }}>
-                    recipe added to cokkery book.
+                    recipe added to cookery book.
                   </Typography>
                 </>
               )}

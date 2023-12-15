@@ -12,9 +12,7 @@ export const formSchema = yup.object().shape({
     .integer()
     .required("Please enter a valid number of servings"),
   occasion: yup.string().required("Please enter a valid ocassion"),
-  dietaryPreferences: yup
-    .string()
-    .required("Please enter a valid dietary plan"),
+  dietaryPreferences: yup.string().required("Please enter a dietary plan"),
   spicelevel: yup
     .number()
     .positive("A little bit of spice will not hurt")
